@@ -69,7 +69,7 @@ export const POST = handler(async ({ user, body }) => {
 function accountIdByCode2(cid: number, code: string) { return all<any>(`SELECT id, code FROM accounts WHERE company_id=? AND type='expense'`, cid).find(a => a.code === code)?.id ?? null; }
 
 /* deterministic extractor */
-export function extractFields(text: string) {
+function extractFields(text: string) {
   const t = text.replace(/\r/g, "");
   const dateM = t.match(/(\d{4}-\d{2}-\d{2})|(\d{1,2}[./-]\d{1,2}[./-]\d{2,4})/);
   let date = today();

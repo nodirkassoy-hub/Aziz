@@ -4,7 +4,7 @@ import { all, get, insert, run, runInTransaction } from "@/lib/db";
 import { audit } from "@/lib/auth";
 import { assertPeriodOpen, nextNumber, postPaymentJE, recalcDocStatus } from "@/lib/postings";
 import { today } from "@/lib/dates";
-import { notifyUsers } from "@/app/api/docs/route";
+import { notifyUsers } from "@/lib/notify";
 
 export const POST = handler(async ({ user, body }) => {
   const cid = user.companyId;

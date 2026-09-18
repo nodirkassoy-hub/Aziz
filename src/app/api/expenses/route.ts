@@ -4,7 +4,7 @@ import { audit, can, ROLES } from "@/lib/auth";
 import { assertPeriodOpen, postExpenseJE, accountIdByCode } from "@/lib/postings";
 import { today } from "@/lib/dates";
 import { notifyUser } from "@/lib/reports";
-import { notifyUsers } from "@/app/api/docs/route";
+import { notifyUsers } from "@/lib/notify";
 
 export const POST = handler(async ({ user, body }) => {
   const cid = user.companyId;

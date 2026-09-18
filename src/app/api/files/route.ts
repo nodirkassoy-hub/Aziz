@@ -49,4 +49,3 @@ export const DELETE = handler(async ({ user, body }) => {
 });
 
 /* individual download/preview (auth-gated streaming) */
-export async function GET2() { return NextResponse.redirect("/app/documents"); }

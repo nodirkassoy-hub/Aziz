@@ -4,6 +4,7 @@ import { all, get, insert, run, runInTransaction } from "@/lib/db";
 import { audit } from "@/lib/auth";
 import { computeDocTotals, nextNumber, postInvoiceJE, postBillJE, recalcDocStatus, assertPeriodOpen, postEntry } from "@/lib/postings";
 import { notifyUser, today, addDays } from "@/lib/_helpers";
+import { notifyUsers } from "@/lib/notify";
 
 type Item = { id?: number; description: string; qty: number; unit_price: number; discount_pct?: number; tax_pct?: number; tax_rate_id?: number | null; account_id?: number | null };
 
@@ -177,12 +178,6 @@ function saveItems(docId: number, items: Item[]) {
   });
 }
 function labelOf(kind: string) { return ({ invoice: "Invoice", quote: "Quote", bill: "Bill", sales_order: "Sales order", purchase_order: "PO", credit_note: "Credit note" } as any)[kind] ?? kind; }
-export function notifyUsers(cid: number, kind: string, severity: string, title: string, body: string, link: string) {
-  for (const m of all<any>(`SELECT user_id FROM memberships WHERE company_id=? AND role IN ('owner','cfo','chief_accountant','accountant','finance_manager')`, cid)) {
-    notifyUser(cid, m.user_id, { kind, severity, title, body, link });
-  }
-}
-
 export const GET = handler(async ({ user, req }) => {
   const sp = new URL(req.url).searchParams;
   const q = sp.get("q");
